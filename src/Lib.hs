@@ -3,6 +3,7 @@ module Lib
     ) where
 
 import Lib.SmtLang.Base
+import Lib.SmtLang.Smt
 
 someFunc :: IO ()
 someFunc = putStrLn $ prettyPrint $ [
