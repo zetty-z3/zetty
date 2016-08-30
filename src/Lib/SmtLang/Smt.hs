@@ -11,7 +11,7 @@ data Symbol = IntSym Integer | StringSym String
 -- TODO choose a nonempty list type
 type NonEmpty a = [a]
 
-data AST = App FuncDecl [AST]
+data AST = AApp App
          | ATrue
          | AFalse
          | AEq AST AST
@@ -94,7 +94,7 @@ data Constructor = Constructor
                     [(Symbol, Maybe Sort, Int)] -- Name, sort option, sortRefs
 
 -- Is this how this works?
-type App = AST
+data App = App FuncDecl [AST]
 
 -- Result returned by solver.
 data Model
@@ -103,9 +103,13 @@ data FuncInterp
 
 data FuncEntry
 
+-- Declare an App AST
+mkApp :: FuncDecl -> [AST] -> AST
+mkApp funcDecl args = AApp (App funcDecl args)
+
 -- Declare a constant
 mkConst :: Symbol -> Sort -> AST
-mkConst sym sort = App (FuncDecl sym [] sort) []
+mkConst sym sort = mkApp (FuncDecl sym [] sort) []
 
 -- Alias for mkConst with flipped args
 mkVar :: Sort -> Symbol -> AST
