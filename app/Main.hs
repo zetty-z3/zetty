@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import Language.Zetty
 
 main :: IO ()
 main = someFunc
